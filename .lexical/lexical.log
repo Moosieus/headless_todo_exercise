@@ -1,0 +1,9 @@
+11:01:16.324 [info] opened file:///home/moosieus/Projects/br_todo_exercise/lib/todo.ex
+11:01:16.332 [info] Resolved entity: {:call, Kernel, :defmodule, 2}
+11:01:16.370 [error] ** (ErlangError) Erlang error: {:exception, %File.Error{reason: :enoent, path: nil, action: "get current working directory"}, [{File, :cwd!, 0, [file: ~c"lib/file.ex", line: 1608]}, {LXical.RemoteControl.Mix, :in_project, 2, [file: ~c"lib/lexical/remote_control/mix.ex", line: 18]}, {LXical.RemoteControl.Search.Fuzzy, :build_filter_fn, 0, [file: ~c"lib/lexical/remote_control/search/fuzzy.ex", line: 343]}, {LXical.RemoteControl.Search.Fuzzy, :new, 4, [file: ~c"lib/lexical/remote_control/search/fuzzy.ex", line: 79]}, {LXical.RemoteControl.CodeAction.Handlers.AddAlias, :do_fuzzy_search, 1, [file: ~c"lib/lexical/remote_control/code_action/handlers/add_alias.ex", line: 200]}, {LXical.RemoteControl.CodeAction.Handlers.AddAlias, :possible_aliases, 1, [file: ~c"lib/lexical/remote_control/code_action/handlers/add_alias.ex", line: 165]}, {LXical.RemoteControl.CodeAction.Handlers.AddAlias, :actions, 3, [file: ~c"lib/lexical/remote_control/code_action/handlers/add_alias.ex", line: 32]}, {Enum, :flat_map_list, 2, [file: ~c"lib/enum.ex", line: 4353]}]}
+    (kernel 9.2.4.1) erpc.erl:702: :erpc.call/5
+    (lx_server 0.5.0) lib/lexical/server/provider/handlers/code_action.ex:16: LXical.Server.Provider.Handlers.CodeAction.handle/2
+    (lx_server 0.5.0) lib/lexical/server/task_queue.ex:77: anonymous fn/4 in LXical.Server.TaskQueue.State.as_task/2
+    (elixir 1.17.2) lib/task/supervised.ex:101: Task.Supervised.invoke_mfa/2
+    (elixir 1.17.2) lib/task/supervised.ex:36: Task.Supervised.reply/4
+
