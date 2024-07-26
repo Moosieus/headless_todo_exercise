@@ -14,7 +14,13 @@ defmodule TodoWeb.UserAuthTest do
       |> Map.replace!(:secret_key_base, TodoWeb.Endpoint.config(:secret_key_base))
       |> init_test_session(%{})
 
-    %{user: user_fixture(), conn: conn}
+    user =
+      user_fixture(%{
+        email: "footest@bar12345.test",
+        password: "P4ssw0rd!12345"
+      })
+
+    %{user: user, conn: conn}
   end
 
   describe "log_in_user/3" do

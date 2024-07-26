@@ -15,6 +15,7 @@ defmodule TodoWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_api_user
   end
 
   scope "/", TodoWeb do
@@ -24,13 +25,19 @@ defmodule TodoWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", TodoWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", TodoWeb do
+    pipe_through :api
+
+    resources "/lists", ListController do
+      post "/tasks", ListController, :create_task
+      patch "/tasks/:id", ListController, :update_task
+      put "/tasks/:id", ListController, :update_task
+      delete "/tasks", ListController, :delete_task
+    end
+  end
 
   # Enable Swoosh mailbox preview in development
   if Application.compile_env(:todo, :dev_routes) do
-
     scope "/dev" do
       pipe_through :browser
 

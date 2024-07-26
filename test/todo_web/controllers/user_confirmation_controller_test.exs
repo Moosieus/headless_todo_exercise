@@ -6,7 +6,14 @@ defmodule TodoWeb.UserConfirmationControllerTest do
   import Todo.AccountsFixtures
 
   setup do
-    %{user: user_fixture()}
+    %{
+      user:
+        user_fixture(%{
+          email: "foo.bar@notarealwebsite.test",
+          password: "P4ssW0rd!12345",
+          confirmed_at: DateTime.utc_now(:second)
+        })
+    }
   end
 
   describe "GET /users/confirm" do

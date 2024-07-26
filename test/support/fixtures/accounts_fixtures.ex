@@ -23,6 +23,13 @@ defmodule Todo.AccountsFixtures do
     user
   end
 
+  def confirm_user(%Todo.Accounts.User{} = user) do
+    Todo.Accounts.User.changeset(user, %{
+      confirmed_at: DateTime.utc_now(:second)
+    })
+    |> Todo.Repo.insert_or_update!()
+  end
+
   def extract_user_token(fun) do
     {:ok, captured_email} = fun.(&"[TOKEN]#{&1}[TOKEN]")
     [_, token | _] = String.split(captured_email.text_body, "[TOKEN]")
