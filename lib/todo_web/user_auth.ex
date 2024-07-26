@@ -230,14 +230,26 @@ defmodule TodoWeb.UserAuth do
   ## API
 
   def fetch_api_user(conn, _opts) do
-    with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
+    with {:ok, token} <- get_bearer_token(conn),
          {:ok, user} <- Accounts.fetch_user_by_api_token(token) do
       assign(conn, :current_user, user)
     else
-      _ ->
+      {:error, :no_token} ->
         conn
-        |> send_resp(:unauthorized, "No access for you")
+        |> send_resp(:unauthorized, "Bearer token required")
         |> halt()
+
+      :error ->
+        conn
+        |> send_resp(:unauthorized, "Unauthorized")
+        |> halt()
+    end
+  end
+
+  defp get_bearer_token(conn) do
+    case get_req_header(conn, "authorization") do
+      ["Bearer " <> token] -> {:ok, token}
+      [] -> {:error, :no_token}
     end
   end
 end

@@ -8,11 +8,13 @@ defmodule TodoTest do
     import Todo.AccountsFixtures
 
     setup do
-      user = user_fixture(%{
-        email: "foo.bar@notarealwebsite.test",
-        password: "P4ssW0rd!2024",
-        confirmed_at: DateTime.utc_now(:second)
-      })
+      user =
+        user_fixture(%{
+          email: "foo.bar@notarealwebsite.test",
+          password: "P4ssW0rd!2024",
+          confirmed_at: DateTime.utc_now(:second)
+        })
+
       list = list_fixture(user)
 
       task = task_fixture(list)
@@ -22,17 +24,21 @@ defmodule TodoTest do
       %{
         user: user,
         list: list,
-        task: task,
+        task: task
       }
     end
 
     @invalid_list_attrs %{title: nil}
     @invalid_task_attrs %{text: nil}
 
-    test "list_lists/0 returns all lists", %{user: user} do
-      list = list_fixture(user, %{title: "placeholder"}, false)
+    test "list_lists/0 returns lists ordered by title", %{user: user} do
+      list2 = list_fixture(user, %{title: "B List 2"}, false)
+      list3 = list_fixture(user, %{title: "A List 3"}, false)
 
-      assert Todo.list_lists(user) == [list]
+      list_of_lists = Todo.list_lists(user)
+
+      # ignore preloaded fixture
+      assert match?([^list3, ^list2, %{title: "some title"}], list_of_lists)
     end
 
     test "get_list!/1 returns the list with given id", %{user: user, list: list} do
@@ -40,10 +46,10 @@ defmodule TodoTest do
     end
 
     test "create_list/1 with valid data creates a list", %{user: user} do
-      valid_attrs = %{title: "some title"}
+      valid_attrs = %{title: "a valid title"}
 
       assert {:ok, %List{} = list} = Todo.create_list(user, valid_attrs)
-      assert list.title == "some title"
+      assert list.title == "a valid title"
     end
 
     test "create_list/1 with invalid data returns error changeset", %{user: user} do

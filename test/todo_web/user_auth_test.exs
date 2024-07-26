@@ -275,4 +275,37 @@ defmodule TodoWeb.UserAuthTest do
       refute conn.status
     end
   end
+
+  describe "fetch_api_user/2" do
+    test "permits the user when bearer token is valid", %{conn: conn, user: user} do
+      encoded_token = Accounts.create_user_api_token(user)
+
+      conn =
+        conn
+        |> put_req_header("authorization", "Bearer " <> encoded_token)
+        |> UserAuth.fetch_api_user([])
+
+      assert not(conn.halted)
+      assert user == conn.assigns.current_user
+    end
+
+    test "permits the user when bearer token is invalid", %{conn: conn} do
+      halted_conn =
+        conn
+        |> put_req_header("authorization", "Bearer " <> "d3w3y_ch34tum&h0w3")
+        |> UserAuth.fetch_api_user([])
+
+      assert halted_conn.halted
+      assert halted_conn.status == 401
+      assert halted_conn.resp_body == "Unauthorized"
+    end
+
+    test "returns unauthorized when bearer token is absent", %{conn: conn} do
+      halted_conn = UserAuth.fetch_api_user(conn, [])
+
+      assert halted_conn.halted
+      assert halted_conn.status == 401
+      assert halted_conn.resp_body == "Bearer token required"
+    end
+  end
 end

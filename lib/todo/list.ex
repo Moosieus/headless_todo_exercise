@@ -6,7 +6,7 @@ defmodule Todo.List do
   schema "lists" do
     field :title, :string
     belongs_to :user, Todo.Accounts.User
-    has_many :tasks, Todo.List.Task
+    has_many :tasks, Todo.List.Task, preload_order: [asc: :inserted_at, asc: :id]
 
     timestamps(type: :utc_datetime)
   end
@@ -15,14 +15,14 @@ defmodule Todo.List do
   def changeset(list, attrs) do
     list
     |> cast(attrs, [:title])
-    |> cast_assoc(:user)
-    |> cast_assoc(:tasks)
-    |> validate_required([:title, :user])
+    |> validate_required([:title])
     |> assoc_constraint(:user)
+    |> cast_assoc(:tasks)
     |> check_constraint(:title, name: :title_not_blank)
+    |> unique_constraint([:user_id, :title], error_key: :title, message: "already exists")
   end
 
-  def with_user(user_id) do
-    from(l in Todo.List, preload: :user, where: l.user_id == ^user_id)
+  def from_user(user_id) do
+    from(l in Todo.List, where: l.user_id == ^user_id)
   end
 end

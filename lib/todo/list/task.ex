@@ -15,8 +15,7 @@ defmodule Todo.List.Task do
   def changeset(task, attrs) do
     task
     |> cast(attrs, [:text, :complete?])
-    |> cast_assoc(:list)
-    |> validate_required([:text, :list, :complete?])
+    |> validate_required([:text, :complete?])
     |> assoc_constraint(:list)
   end
 
@@ -26,5 +25,13 @@ defmodule Todo.List.Task do
       join: l in assoc(t, :list),
       where: l.user_id == ^user_id
     )
+  end
+end
+
+defimpl Jason.Encoder, for: Todo.List.Task do
+  def encode(task, opts) do
+    task
+    |> Map.take([:id, :text, :complete?, :list_id, :inserted_at, :updated_at])
+    |> Jason.Encode.map(opts)
   end
 end

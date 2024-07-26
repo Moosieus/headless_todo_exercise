@@ -9,7 +9,7 @@ defmodule TodoFixtures do
   @doc """
   Generate a list.
   """
-  def list_fixture(%User{} = user, attrs \\ %{title: "Placeholder"}, tasks? \\ true) do
+  def list_fixture(%User{} = user, attrs \\ %{"title" => "some title"}, tasks? \\ true) do
     attrs = Enum.into(attrs, %{})
 
     {:ok, list} = Todo.create_list(user, attrs)
@@ -21,7 +21,7 @@ defmodule TodoFixtures do
     end
   end
 
-  def task_fixture(%Todo.List{} = list, attrs \\ %{text: "Placeholder"}) do
+  def task_fixture(%Todo.List{} = list, attrs \\ %{"text" => "some text"}) do
     attrs = Enum.into(attrs, %{})
 
     {:ok, task} = Todo.create_task(list, attrs)

@@ -53,12 +53,12 @@ defmodule TodoWeb.ListController do
 
     list = Todo.get_list!(user, list_id)
 
-    with {:ok, %Todo.List.Task{} = task} <- Todo.create_task(list, task_params) do
-      list = Todo.get_list!(user, task.list_id)
+    with {:ok, %Todo.List.Task{list_id: list_id}} <- Todo.create_task(list, task_params) do
+      list = Todo.get_list!(user, list_id)
 
       conn
       |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/lists/#{list}")
+      |> put_resp_header("location", ~p"/api/lists/#{list.id}")
       |> render(:show, list: list)
     end
   end
@@ -68,8 +68,8 @@ defmodule TodoWeb.ListController do
 
     task = Todo.get_task!(user, id)
 
-    with {:ok, %Todo.List{} = list} <- Todo.update_task(task, task_params) do
-      render(conn, :show, list: list)
+    with {:ok, %Todo.List.Task{} = task} <- Todo.update_task(task, task_params) do
+      render(conn, :show, task: task)
     end
   end
 

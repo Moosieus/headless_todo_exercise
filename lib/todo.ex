@@ -18,7 +18,8 @@ defmodule Todo do
   """
   def list_lists(%User{id: user_id}) do
     user_id
-    |> Todo.List.with_user()
+    |> Todo.List.from_user()
+    |> order_by([l], asc: l.title)
     |> Repo.all()
   end
 
@@ -38,7 +39,7 @@ defmodule Todo do
   """
   def get_list!(%User{id: user_id}, id) do
     user_id
-    |> Todo.List.with_user()
+    |> Todo.List.from_user()
     |> preload(:tasks)
     |> Repo.get!(id)
   end
@@ -55,8 +56,8 @@ defmodule Todo do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_list(%User{} = user, attrs \\ %{}) do
-    %Todo.List{user: user}
+  def create_list(%User{id: user_id}, attrs \\ %{}) do
+    %Todo.List{user_id: user_id}
     |> Todo.List.changeset(attrs)
     |> Repo.insert()
   end
@@ -126,8 +127,8 @@ defmodule Todo do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_task(%Todo.List{} = list, attrs \\ %{}) do
-    %Todo.List.Task{list: list}
+  def create_task(%Todo.List{id: list_id}, attrs \\ %{}) do
+    %Todo.List.Task{list_id: list_id}
     |> Todo.List.Task.changeset(attrs)
     |> Repo.insert()
   end

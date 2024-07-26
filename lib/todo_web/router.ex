@@ -32,7 +32,7 @@ defmodule TodoWeb.Router do
       post "/tasks", ListController, :create_task
       patch "/tasks/:id", ListController, :update_task
       put "/tasks/:id", ListController, :update_task
-      delete "/tasks", ListController, :delete_task
+      delete "/tasks/:id", ListController, :delete_task
     end
   end
 
