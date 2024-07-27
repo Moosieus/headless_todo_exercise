@@ -24,7 +24,10 @@ config :todo, TodoWeb.Endpoint,
   code_reloader: true,
   debug_errors: true,
   secret_key_base: "OtJGZW9nXdwXF8aEvnQe/7r9tHwsyuMCG4v1w4F/nO/9l7px6MVnQVnH1vWSd/VN",
-  watchers: []
+  watchers: [
+    esbuild: {Esbuild, :install_and_run, [:phoenix_generation, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:phoenix_generation, ~w(--watch)]}
+  ]
 
 # ## SSL Support
 #

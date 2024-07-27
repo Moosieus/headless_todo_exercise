@@ -164,10 +164,12 @@ defmodule TodoWeb.ListControllerTest do
                "id" => ^list_id,
                "tasks" => [
                  %{
-                  "id" => ^id,
+                   "id" => ^id,
                    "text" => "some updated text",
                    "complete?" => true
-                 }, _, _
+                 },
+                 _,
+                 _
                ]
              } = json_response(conn, 200)["data"]
     end

@@ -229,7 +229,7 @@ defmodule TodoWeb.UserAuth do
 
   ## API
 
-  def fetch_api_user(conn, _opts) do
+  def authenticate_user_api_token(conn, _opts) do
     with {:ok, token} <- get_bearer_token(conn),
          {:ok, user} <- Accounts.fetch_user_by_api_token(token) do
       assign(conn, :current_user, user)
@@ -246,6 +246,7 @@ defmodule TodoWeb.UserAuth do
     end
   end
 
+  @spec get_bearer_token(conn :: Plug.Conn.t()) :: {:ok, token :: binary()} | {:error, :no_token}
   defp get_bearer_token(conn) do
     case get_req_header(conn, "authorization") do
       ["Bearer " <> token] -> {:ok, token}

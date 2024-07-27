@@ -126,7 +126,7 @@ defmodule Todo.Accounts.UserToken do
     end
   end
 
-  defp days_for_context("api-token"), do: 30
+  defp days_for_context("api-token"), do: 90
   defp days_for_context("confirm"), do: @confirm_validity_in_days
   defp days_for_context("reset_password"), do: @reset_password_validity_in_days
 
@@ -176,5 +176,13 @@ defmodule Todo.Accounts.UserToken do
 
   def by_user_and_contexts_query(user, [_ | _] = contexts) do
     from t in UserToken, where: t.user_id == ^user.id and t.context in ^contexts
+  end
+
+  @doc """
+  Queries the database to determine if a user has a window.
+  """
+  def user_has_token?(%Todo.Accounts.User{id: id}, context) do
+    from(t in UserToken, where: t.user_id == ^id and t.context == ^context)
+    |> Todo.Repo.exists?()
   end
 end

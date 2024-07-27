@@ -15,7 +15,7 @@ defmodule TodoWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug :fetch_api_user
+    plug :authenticate_user_api_token
   end
 
   scope "/", TodoWeb do

@@ -43,6 +43,7 @@ defmodule TodoWeb do
         layouts: [html: TodoWeb.Layouts]
 
       import Plug.Conn
+      import TodoWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -84,6 +85,7 @@ defmodule TodoWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import TodoWeb.CoreComponents
+      import TodoWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
