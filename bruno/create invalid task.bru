@@ -1,0 +1,26 @@
+meta {
+  name: create invalid task
+  type: http
+  seq: 12
+}
+
+post {
+  url: {{host}}/api/lists/{{list_id}}/tasks
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "text": "",
+    "complete?": true
+  }
+}
+
+vars:pre-request {
+  list_id: 14
+}

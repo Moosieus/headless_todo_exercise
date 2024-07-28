@@ -1,0 +1,26 @@
+meta {
+  name: update list (patch)
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{host}}/api/lists/{{id}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "id": 14,
+    "title": "An updated title!"
+  }
+}
+
+vars:pre-request {
+  id: 14
+}

@@ -1,0 +1,36 @@
+meta {
+  name: update tasks via parent list
+  type: http
+  seq: 8
+}
+
+put {
+  url: {{host}}/api/lists/{{id}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "id": 14,
+    "tasks": [
+      {
+        "id": 1,
+        "complete?": true
+      },
+      {
+        "id": 2,
+        "complete?": true
+      }
+    ],
+    "_comment": "All tasks must be present to update via parent"
+  }
+}
+
+vars:pre-request {
+  id: 14
+}

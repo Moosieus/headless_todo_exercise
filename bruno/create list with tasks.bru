@@ -1,0 +1,30 @@
+meta {
+  name: create list with tasks
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/api/lists
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "daily chores",
+    "tasks": [
+      {
+        "text": "Wash the dishes",
+        "complete?": true
+      },
+      {
+        "text": "Walk the dog"
+      }
+    ]
+  }
+}

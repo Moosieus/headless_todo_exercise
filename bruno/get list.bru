@@ -1,0 +1,19 @@
+meta {
+  name: get list
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{host}}/api/lists/{{id}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+vars:pre-request {
+  id: 14
+}

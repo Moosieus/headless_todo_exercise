@@ -1,0 +1,23 @@
+meta {
+  name: create list with empty tasks
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{host}}/api/lists
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "Empty tasks",
+    "tasks": [],
+    "_comment": "Just to show this works. Unknown fields are ignored."
+  }
+}

@@ -1,0 +1,26 @@
+meta {
+  name: update task
+  type: http
+  seq: 13
+}
+
+put {
+  url: {{host}}/api/lists/{{list_id}}/tasks/{{id}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "complete?": true
+  }
+}
+
+vars:pre-request {
+  list_id: 14
+  id: 5
+}

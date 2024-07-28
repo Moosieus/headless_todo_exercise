@@ -1,0 +1,27 @@
+meta {
+  name: update task (patch)
+  type: http
+  seq: 14
+}
+
+patch {
+  url: {{host}}/api/lists/{{list_id}}/tasks/{{id}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "text": "cancel appointment",
+    "complete?": true
+  }
+}
+
+vars:pre-request {
+  list_id: 14
+  id: 5
+}

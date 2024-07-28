@@ -1,0 +1,27 @@
+meta {
+  name: create list with invalid tasks
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{host}}/api/lists
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "Invalid tasks",
+    "tasks": [
+      {},
+      {"text": ""},
+      {"text": 12345},
+      {"text": "test"}
+    ]
+  }
+}

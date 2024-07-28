@@ -1,0 +1,21 @@
+meta {
+  name: create list
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/api/lists
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "title": "An empty list"
+  }
+}

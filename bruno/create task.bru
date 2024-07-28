@@ -1,0 +1,25 @@
+meta {
+  name: create task
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{host}}/api/lists/{{list_id}}/tasks
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "text": "create another task!"
+  }
+}
+
+vars:pre-request {
+  list_id: 14
+}
