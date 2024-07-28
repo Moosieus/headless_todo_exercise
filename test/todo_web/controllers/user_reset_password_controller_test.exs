@@ -86,8 +86,8 @@ defmodule TodoWeb.UserResetPasswordControllerTest do
       conn =
         put(conn, ~p"/users/reset_password/#{token}", %{
           "user" => %{
-            "password" => "new valid password",
-            "password_confirmation" => "new valid password"
+            "password" => "New Valid Password 410",
+            "password_confirmation" => "New Valid Password 410"
           }
         })
 
@@ -97,7 +97,7 @@ defmodule TodoWeb.UserResetPasswordControllerTest do
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~
                "Password reset successfully"
 
-      assert Accounts.get_user_by_email_and_password(user.email, "new valid password")
+      assert Accounts.get_user_by_email_and_password(user.email, "New Valid Password 410")
     end
 
     test "does not reset password on invalid data", %{conn: conn, token: token} do

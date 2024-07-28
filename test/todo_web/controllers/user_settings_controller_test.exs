@@ -27,8 +27,8 @@ defmodule TodoWeb.UserSettingsControllerTest do
           "action" => "update_password",
           "current_password" => valid_user_password(),
           "user" => %{
-            "password" => "new valid password",
-            "password_confirmation" => "new valid password"
+            "password" => "New Valid Password 123",
+            "password_confirmation" => "New Valid Password 123"
           }
         })
 
@@ -39,7 +39,7 @@ defmodule TodoWeb.UserSettingsControllerTest do
       assert Phoenix.Flash.get(new_password_conn.assigns.flash, :info) =~
                "Password updated successfully"
 
-      assert Accounts.get_user_by_email_and_password(user.email, "new valid password")
+      assert Accounts.get_user_by_email_and_password(user.email, "New Valid Password 123")
     end
 
     test "does not update password on invalid data", %{conn: conn} do
