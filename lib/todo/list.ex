@@ -6,7 +6,10 @@ defmodule Todo.List do
   schema "lists" do
     field :title, :string
     belongs_to :user, Todo.Accounts.User
-    has_many :tasks, Todo.List.Task, preload_order: [asc: :inserted_at, asc: :id]
+
+    has_many :tasks, Todo.List.Task,
+      preload_order: [asc: :inserted_at, asc: :id],
+      on_replace: :mark_as_invalid
 
     timestamps(type: :utc_datetime)
   end

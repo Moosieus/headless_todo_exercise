@@ -67,7 +67,7 @@ defmodule TodoWeb.ListControllerTest do
     setup [:login]
 
     test "renders list when data is valid", %{conn: conn} do
-      conn = post(conn, ~p"/api/lists", list: @create_list_attrs)
+      conn = post(conn, ~p"/api/lists", @create_list_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, ~p"/api/lists/#{id}")
@@ -79,7 +79,7 @@ defmodule TodoWeb.ListControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, ~p"/api/lists", list: @invalid_list_attrs)
+      conn = post(conn, ~p"/api/lists", @invalid_list_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -88,7 +88,7 @@ defmodule TodoWeb.ListControllerTest do
     setup [:login, :create_list]
 
     test "renders list when data is valid", %{conn: conn, list: %List{id: id} = list} do
-      conn = put(conn, ~p"/api/lists/#{list}", list: @update_list_attrs)
+      conn = put(conn, ~p"/api/lists/#{list}", @update_list_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, ~p"/api/lists/#{id}")
@@ -100,7 +100,7 @@ defmodule TodoWeb.ListControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, list: list} do
-      conn = put(conn, ~p"/api/lists/#{list}", list: @invalid_list_attrs)
+      conn = put(conn, ~p"/api/lists/#{list}", @invalid_list_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -123,7 +123,7 @@ defmodule TodoWeb.ListControllerTest do
 
     test "renders parent list when data is valid", %{conn: conn, list: list} do
       task_attrs = %{list_id: list.id, text: "a new task 410", complete?: true}
-      conn = post(conn, ~p"/api/lists/#{list}/tasks", task: task_attrs)
+      conn = post(conn, ~p"/api/lists/#{list}/tasks", task_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, ~p"/api/lists/#{list}")
@@ -141,7 +141,7 @@ defmodule TodoWeb.ListControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, list: list} do
-      conn = post(conn, ~p"/api/lists/#{list}/tasks", task: @invalid_task_attrs)
+      conn = post(conn, ~p"/api/lists/#{list}/tasks", @invalid_task_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -155,7 +155,7 @@ defmodule TodoWeb.ListControllerTest do
         list_id: list_id
       } = task
 
-      conn = put(conn, ~p"/api/lists/#{list_id}/tasks/#{id}", task: @update_task_attrs)
+      conn = put(conn, ~p"/api/lists/#{list_id}/tasks/#{id}", @update_task_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, ~p"/api/lists/#{list_id}")
@@ -180,7 +180,7 @@ defmodule TodoWeb.ListControllerTest do
         list_id: list_id
       } = task
 
-      conn = put(conn, ~p"/api/lists/#{list_id}/tasks/#{id}", task: @invalid_task_attrs)
+      conn = put(conn, ~p"/api/lists/#{list_id}/tasks/#{id}", @invalid_task_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

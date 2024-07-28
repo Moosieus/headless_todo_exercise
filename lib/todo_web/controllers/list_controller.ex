@@ -10,7 +10,7 @@ defmodule TodoWeb.ListController do
     render(conn, :index, lists: lists)
   end
 
-  def create(conn, %{"list" => list_params}) do
+  def create(conn, list_params) do
     user = current_user!(conn)
 
     with {:ok, %Todo.List{} = list} <- Todo.create_list(user, list_params) do
@@ -28,7 +28,7 @@ defmodule TodoWeb.ListController do
     render(conn, :show, list: list)
   end
 
-  def update(conn, %{"id" => id, "list" => list_params}) do
+  def update(conn, %{"id" => id} = list_params) do
     user = current_user!(conn)
 
     list = Todo.get_list!(user, id)
@@ -48,7 +48,7 @@ defmodule TodoWeb.ListController do
     end
   end
 
-  def create_task(conn, %{"list_id" => list_id, "task" => task_params}) do
+  def create_task(conn, %{"list_id" => list_id} = task_params) do
     user = current_user!(conn)
 
     list = Todo.get_list!(user, list_id)
@@ -63,7 +63,7 @@ defmodule TodoWeb.ListController do
     end
   end
 
-  def update_task(conn, %{"id" => id, "task" => task_params}) do
+  def update_task(conn, %{"id" => id} = task_params) do
     user = current_user!(conn)
 
     task = Todo.get_task!(user, id)
@@ -73,9 +73,10 @@ defmodule TodoWeb.ListController do
     end
   end
 
-  def delete_task(conn, %{"id" => id}) do
+  def delete_task(conn, %{"list_id" => list_id, "id" => id}) do
     user = current_user!(conn)
 
+    _list = Todo.get_list!(user, list_id)
     task = Todo.get_task!(user, id)
 
     with {:ok, %Todo.List.Task{}} <- Todo.delete_task(task) do
