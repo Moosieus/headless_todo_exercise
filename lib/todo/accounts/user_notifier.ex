@@ -5,10 +5,12 @@ defmodule Todo.Accounts.UserNotifier do
 
   # Delivers the email using the application mailer.
   defp deliver(recipient, subject, body) do
+    host = Application.get_env(:todo, TodoWeb.Endpoint)[:url][:host]
+
     email =
       new()
       |> to(recipient)
-      |> from({"Todo", "contact@example.com"})
+      |> from({"Todo", "noreply@#{host}"})
       |> subject(subject)
       |> text_body(body)
 

@@ -114,4 +114,9 @@ if config_env() == :prod do
   #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
+
+  config :todo, Todo.Mailer,
+    adapter: Swoosh.Adapters.Mailjet,
+    api_key: System.fetch_env!("MAILJET_API_KEY"),
+    secret: System.fetch_env!("MAILJET_SECRET_KEY")
 end
